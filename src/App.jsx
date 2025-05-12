@@ -4,17 +4,25 @@ import "./App.css";
 
 function App() {
   const [starShips, setStarShips] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const baseUrl = "https://www.swapi.tech/api/starships";
 
   async function handleFetch() {
+    setLoading(true);
     try {
       const res = await axios.get(baseUrl);
       let data = res.data.results;
       setStarShips(data);
+      setLoading(false);
     } catch (err) {
       console.error(err);
+      setLoading(false);
     }
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   return (
